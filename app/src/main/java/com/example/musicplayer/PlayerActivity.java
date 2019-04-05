@@ -39,6 +39,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         positionEnd=(TextView)findViewById(R.id.positionEnd);
         btn_next=(Button)findViewById(R.id.next);
+        positionStart=(TextView) findViewById(R.id.positionStart);
         btn_previous=(Button)findViewById(R.id.previous);
         btn_pause=(Button)findViewById(R.id.pause);
         songTextLabel=(TextView)findViewById(R.id.songLabel);
@@ -50,28 +51,24 @@ public class PlayerActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // To set Seek Bar progress
-        updateseekbar=new Thread()
+        updateseekbar=new Thread(){
+        @Override
+        public void run()
         {
-            @Override
-            public void run() {
-                int totalDuration = myMediaPlayer.getDuration();
-                String dur=String.valueOf(totalDuration/60000)+":"+String.valueOf(totalDuration%1000);
-                positionEnd.setText(String.valueOf(dur));
-                int currentPosition=0;
+                    int totalDuration = myMediaPlayer.getDuration();
+                    String dur=String.valueOf(totalDuration/60000)+":"+String.valueOf(totalDuration%1000);
+                    positionEnd.setText(String.valueOf(dur));
+                    int currentPosition=0;
 
-                while(currentPosition<totalDuration) {
-                    try {
-                        sleep(500);
+                    while(currentPosition<totalDuration) {
                             currentPosition=myMediaPlayer.getCurrentPosition();
+                            //positionStart.setText(currentPosition);
+                            songSeekBar.setProgress(currentPosition);//
 
-                        songSeekBar.setProgress(currentPosition);
-                    }
-                    catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
                 }
-            }
         };
+
         // If there is no song playing then this is called
         if(myMediaPlayer!=null) {
             myMediaPlayer.stop();
@@ -117,7 +114,8 @@ public class PlayerActivity extends AppCompatActivity {
         songSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                String dur=String.valueOf(progress/1000);
+                positionStart.setText(dur);
             }
 
             @Override

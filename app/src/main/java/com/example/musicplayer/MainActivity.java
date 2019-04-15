@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             }else {
                 if(singleFile.getName().endsWith(".mp3") ||
                 singleFile.getName().endsWith(".wav")){
+                    if(!singleFile.getName().startsWith("."))
                     arrayList.add(singleFile);
                 }
             }

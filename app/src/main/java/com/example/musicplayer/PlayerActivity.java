@@ -17,6 +17,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import static com.example.musicplayer.R.layout.activity_player;
 
@@ -56,14 +57,30 @@ public class PlayerActivity extends AppCompatActivity {
         public void run()
         {
                     int totalDuration = myMediaPlayer.getDuration();
-                    String dur=String.valueOf(totalDuration/60000)+":"+String.valueOf(totalDuration%1000);
+                    long minutes = TimeUnit.MILLISECONDS.toMinutes(totalDuration);
+                    long seconds = TimeUnit.MILLISECONDS.toSeconds(totalDuration);
+                    seconds=seconds-60*minutes;
+                    String dur;
+                    if(minutes==0)
+                        dur="0:"+String.valueOf(seconds);
+                    else
+                        dur=String.valueOf(minutes)+":"+String.valueOf(seconds);
                     positionEnd.setText(String.valueOf(dur));
                     int currentPosition=0;
 
                     while(currentPosition<totalDuration) {
+                        try
+                        {
+                            sleep(500);
                             currentPosition=myMediaPlayer.getCurrentPosition();
                             //positionStart.setText(currentPosition);
-                            songSeekBar.setProgress(currentPosition);//
+                            songSeekBar.setProgress(currentPosition);
+                        }
+                        catch(InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
+
 
                     }
                 }
@@ -73,6 +90,7 @@ public class PlayerActivity extends AppCompatActivity {
         if(myMediaPlayer!=null) {
             myMediaPlayer.stop();
             myMediaPlayer.release();
+           // updateseekbar.stop();
         }
 
         // To get Data sent from Main Activity
@@ -114,8 +132,20 @@ public class PlayerActivity extends AppCompatActivity {
         songSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                String dur=String.valueOf(progress/1000);
+
+                long minutes = TimeUnit.MILLISECONDS.toMinutes(progress);
+                progress=progress-(int)minutes*60;
+                long seconds = TimeUnit.MILLISECONDS.toSeconds(progress);
+                seconds=seconds-60*minutes;
+                String dur;
+                if(minutes==0)
+                    dur="0:"+String.valueOf(seconds);
+                else
+                    dur=String.valueOf(minutes)+":"+String.valueOf(seconds);
+
+
                 positionStart.setText(dur);
+
             }
 
             @Override
@@ -151,6 +181,7 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 myMediaPlayer.stop();
+                myMediaPlayer.release();
 
                 //chaning position
                 position=(position+1)%mySongs.size();
@@ -171,6 +202,7 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 myMediaPlayer.stop();
+                myMediaPlayer.release();
 
                 position=(position-1)<0?(mySongs.size()-1):(position-1);
 

@@ -71,7 +71,7 @@ public class PlayerActivity extends AppCompatActivity {
                     while(currentPosition<totalDuration) {
                         try
                         {
-                            sleep(500);
+                            sleep(1000);
                             currentPosition=myMediaPlayer.getCurrentPosition();
                             //positionStart.setText(currentPosition);
                             songSeekBar.setProgress(currentPosition);

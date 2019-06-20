@@ -11,6 +11,7 @@ Pre-requisites
 Features
 ---------------
 - External Music Storage
+- Play/Pause Song
 - Adaptive Layout
 
 Preview
@@ -28,4 +29,4 @@ Preview
       <img src="https://user-images.githubusercontent.com/38128234/56104095-e2974700-5f53-11e9-99a4-bc1dc36d3b22.jpeg" alt="Your image title" width="250"/>
     </td>
   </tr>
-  </table>
+</table>

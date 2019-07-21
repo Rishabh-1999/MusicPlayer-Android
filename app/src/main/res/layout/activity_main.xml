@@ -8,6 +8,14 @@
     android:padding="10dp"
     tools:context=".MainActivity">
 
+    <SearchView
+        android:id="@+id/searchmusic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search Here"
+        android:layout_marginBottom="20px" />
+
     <ListView
         android:layout_width="match_parent"
         android:id="@+id/mySongListView"

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -26,14 +27,32 @@ public class MainActivity extends AppCompatActivity {
 
     ListView mySongViewForSong;
     String[] items;
+    SearchView searchView;
+    ArrayAdapter<String> myAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mySongViewForSong=(ListView)findViewById(R.id.mySongListView);
+        searchView=(SearchView)findViewById(R.id.searchmusic);
         //Get Permission
         runTimePermission();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //myAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                myAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
     }
     public void runTimePermission() {
@@ -95,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Putting all file name in listView
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,items);
+        myAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,items);
         mySongViewForSong.setAdapter(myAdapter);
 
         // Using Itent to play song Activity and send Song name and arraulist containing songs

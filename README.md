@@ -1,6 +1,6 @@
-### MusicPlayer_In_Android
+# MusicPlayer_In_Android
 
-Simple Music Player in Android.
+Music Player in Android using JAVA.
 
 Pre-requisites
 --------------
@@ -10,9 +10,18 @@ Pre-requisites
 
 Features
 ---------------
-- External Music Storage
+- Songs External Music Storage
 - Play/Pause Song
 - Adaptive Layout
+- Search Song in local Storage
+- Open Source
+
+
+Extra Dependencies
+------------------
+````
+implementation 'com.karumi:dexter:5.0.0'
+````
 
 Preview
 ---------------

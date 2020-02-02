@@ -1,6 +1,6 @@
 # MusicPlayer_In_Android
 
-Music Player in Android using JAVA.
+Music Player for Android using JAVA.
 
 Pre-requisites
 --------------
